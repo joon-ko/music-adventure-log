@@ -34,11 +34,9 @@ public void FillBuffer()
 }
 ```
 
-The important wave generation stuff happens in `FillBuffer()`. The rest is minutiae in setting up the audio player. Implicit here is that a generator has a *buffer length*, in seconds, that determines the size of the audio buffer and thus the number of frames initially available. For example, a buffer length of 1 second with a mix rate of 44,100 Hz will result in roughly 44,100 frames available to be written when `FillBuffer()` is called. Let's assume a mix rate of 44,100 Hz from now on.
+The important wave generation stuff happens in `FillBuffer()`. The rest is minutiae in setting up the audio player. Conceptually, this function "draws" a unit-amplitude sine wave at the given frequency by taking 44,100 samples per second. Although $y = sin(t)$ is a continuous function, we are discretizing it with enough fidelity that an audio speaker plays it as if it were a mathematically pure wave. This fidelity is what the `increment` variable represents: it's the phase offset between two samples. Another way to look at it is that `FillBuffer()` draws 440 periodic cycles of a sine wave every 44,100 frames. In other words, it draws one cycle of a sine wave every $\frac{44100}{440} \approx 100.2$ frames.
 
-Conceptually, the `FillBuffer()` function "draws" a unit-amplitude sine wave at the given frequency by taking 44,100 samples per second. Although $y = sin(t)$ is a continuous function, we are discretizing it with enough fidelity that an audio speaker plays it as if it were a mathematically pure wave. This fidelity is what the `increment` variable represents: it's the temporal distance between two samples. Another way to look at it is that `FillBuffer()` draws 440 periodic cycles of a sine wave every 44,100 frames. In other words, it draws one cycle of a sine wave every $\frac{44100}{440} \approx 100.2$ frames.
-
-Now, a sine wave is a fairly simple example of audio that can be generated programmatically. But this tiny opening that the Godot engine has given me may very well lead me through an epic adventure that uses the humble AudioStreamGenerator as a backbone for a modular music system where Godot's strengths push the creative potential towards sky's limit.
+Now, a sine wave is a fairly simple example of audio that can be generated programmatically. But this tiny opening that the Godot engine has given may very well take me on an epic adventure that uses the humble AudioStreamGenerator as the backbone for a modular music system where Godot's strengths push the creative potential towards sky's limit.
 
 ![](../images/all-modules.png)
 
