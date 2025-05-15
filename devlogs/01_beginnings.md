@@ -1,6 +1,6 @@
 # \[01\] beginnings
 
-It all began not long after I'd finished my first [game jam](https://atau.itch.io/saute-and-slay) with a team of friends -- it was one of my first serious forays with the [Godot](https://godotengine.org/) game engine. I've grown to really like Godot so far, and it feels slimmer and more intuitive to me than Unity, which I didn't spent much time working with before wanting to try Godot instead. I may belong to a growing cohort of game dev hobbyists that have only ever known Godot as their creative medium.
+It began not long after I'd finished my first [game jam](https://atau.itch.io/saute-and-slay) with a team of friends -- it was one of my first serious forays with the [Godot](https://godotengine.org/) game engine. I've grown to really like Godot so far, and it feels slimmer and more intuitive to me than Unity, which I didn't spend much time working with before wanting to try Godot instead. I may belong to a growing cohort of game dev hobbyists that have only ever known Godot as their creative medium.
 
 Browsing through documentation, I came across the [AudioStreamGenerator](https://docs.godotengine.org/en/stable/classes/class_audiostreamgenerator.html#class-audiostreamgenerator) class. Unlike other audio streams that already "contain" audio to be played back by an [AudioStreamPlayer](https://docs.godotengine.org/en/stable/classes/class_audiostreamplayer.html), audio is instead programatically generated frame-by-frame. For example, to play a pure sine wave, we could write the following script (modified from Godot docs):
 
@@ -53,3 +53,5 @@ Another core inspiration is analog modular synthesis. I have never taken on modu
 Finally, there are two modern DAWs (digital audio workstations) that I feel particularly inspired by: [Ableton Live](https://www.ableton.com/en/live/) and [Max](https://cycling74.com/products/max). Ableton remains my DAW of choice for whenever I feel musically creative in the non-interactive-systems way, and I love how modular, expressive, and automated it can feel, and I love that it is so seamlessly integrated with Max, which is the established audio-visual modular system that feels most similar to what I am going after. Its aesthetics and mode of interaction feel fundamentally different from this current project, but its building-block modularity and visual creative environment is very influential to this project.
 
 ![](../images/max.png)
+
+An honorable mention goes out to the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API), which uses essentially the same concepts that I use for routing audio in this project via an audio node graph. I used this API for my chord slingy project and had a lot of fun working with it!
