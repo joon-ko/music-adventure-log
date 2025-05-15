@@ -57,7 +57,8 @@ Note that there is an extra step where the input buffer is duplicated to both co
 // AudioNodeGraph.cs
 public class AudioNodeGraph
 {
-    private List<SpeakerNode> _speakerNodes;
+    // Let's just assume we can only have one speaker for now.
+    private SpeakerNode _speakerNode;
 
     // Keys are sources (outputs), and values are targets (inputs).
     private Dictionary<IOAddress, IOAddress> _connections;
@@ -138,6 +139,6 @@ The downside of this approach is that we are introducing a good amount of latenc
 
 ![](../images/destination-as-root-heatmap.png)
 
-The solution to this latency issue, which is on the backlog and would be a fun devlog entry on its own, would be to use a hybrid approach. I think we should definitely stick to the speaker-as-root approach as it's much simpler to reason about, but instead of naïvely advancing audio by one edge connection each processing frame, we can identify chains that look like the $A \rightarrow B \rightarrow C$ mentioned earlier. These chains can be "reduced" by the processing context as if it were a single module whose input is the inputs of $A$ and whose output is the outputs of $C$. These subchains would be processed with source-as-root, so the first approach. This would mean that for single-chain systems, the latency/behavior would be identical to the source-as-root approach! For branching systems, there would still be more steps, but there would certainly be fewer steps.
+The solution to this latency issue, which is on the backlog and would be a fun devlog entry on its own, would be to use a hybrid approach. I think we should definitely stick to the speaker-as-root approach as it's much simpler to reason about, but instead of naïvely advancing audio by one edge connection each processing frame, we can identify chains that look like the $A \rightarrow B \rightarrow C$ mentioned earlier. These chains can be "reduced" by the processing context as if it were a single module whose input is the inputs of $A$ and whose output is the outputs of $C$. These subchains would be processed with source-as-root, so the first approach. This would mean that for single-chain systems, the latency/behavior would be identical to the source-as-root approach! For branching systems, there would still be steps, certainly fewer than the one-edge-per-frame approach.
 
 ![](../images/hybrid-approach-heatmap.png)
