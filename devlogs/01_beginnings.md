@@ -55,3 +55,5 @@ Finally, there are two modern DAWs (digital audio workstations) that I feel part
 ![](../images/max.png)
 
 An honorable mention goes out to the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API), which uses essentially the same concepts that I use for routing audio in this project via an audio node graph. I used this API for my chord slingy project and had a lot of fun working with it!
+
+#### [\[02\] audio graphs](./02_audio-graphs.md) >>>

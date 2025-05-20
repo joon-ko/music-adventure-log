@@ -155,3 +155,5 @@ Some final comments: the visuals for pretty much everything is kind of prototypa
 | dark blue   | trigger output |
 
 I'll omit what MIDI and trigger IO ports are used for until the next entry, where we'll talk about audio envelopes and connecting MIDI input.
+
+#### <<< [\[02\] beginnings](./02_audio-graphs.md) | [\[04\] envelopes](./04_envelopes.md) >>>
