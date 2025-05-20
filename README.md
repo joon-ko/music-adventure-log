@@ -4,9 +4,12 @@ A devlog for a modular music system made with Godot.
 ![](images/all-modules.png)
 
 ## entries
+### completed
 - [**\[01\]**](devlogs/01_beginnings.md) **beginnings** - generating audio in Godot programatically, project inspirations
 - [**\[02\]**](devlogs/02_audio-graphs.md) **audio graphs** - how will audio flow through the system?
 - [**\[03\]**](devlogs/03_wave-generation.md) **wave generation** - synthesizing different wave shapes (triangle, square, sawtooth)
+
+### coming soon
 - [**\[04\]**](devlogs/04_envelopes.md) **envelopes** - shaping sound and giving it a voice with attack, decay, sustain, and release
 - [**\[05\]**](devlogs/05_midi-keyboards-and-polyphony.md) **midi keyboards and polyphony** - using real-life midi input & how to play more than one note at a time
 - [**\[06\]**](devlogs/06_biquad-filters.md) **biquad filters** - 
