@@ -94,7 +94,7 @@ The columns, in order, are MIDI pitch, pitch name, pitch octave, and frequency. 
 
 Okay, so now what happens when we connect a keyboard module to a wave module, which is connected to a speaker? We get melody!
 
-![](../images/keyboard-placeholder.png)
+https://github.com/user-attachments/assets/1b2c8117-0622-4a85-b68e-cb938dba890b
 
 More fun things like pitch bending will probably come much further down the line. For now, just being able to affect pitch is enough. You will notice, though, that although we now have a notion of melody, we don't have a notion yet of *voice*: the wave is playing at a shrill, constant volume. We'll tackle how to shape wave amplitudes to give it voice in the next entry.
 
