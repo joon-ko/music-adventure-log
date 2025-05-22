@@ -25,8 +25,8 @@ To give a sketch of how MIDI events get received and routed: first, the **keyboa
     {
         if (@event is InputEventMidi)
         {
-			InputEventMidi midiEvent = (InputEventMidi)@event;
-			EmitSignal(SignalName.MidiEvent, midiEvent, audioNode.nodeId, midiOutput.index);
+	    InputEventMidi midiEvent = (InputEventMidi)@event;
+	    EmitSignal(SignalName.MidiEvent, midiEvent, audioNode.nodeId, midiOutput.index);
         }
         // ...
     }
@@ -48,7 +48,7 @@ It emits a `MidiEvent` signal that is received by the AudioNodeGraph's `OnMidiEv
     }
 ```
 
-The `OnMidiInput` method, is where we can actually do stuff with the event, like read its pitch and adjust the wave module's frequency accordingly.
+The `OnMidiInput` method is where we can actually do stuff with the MIDI event. For example, the wave module reads the MIDI pitch and adjusts the wave module's frequency accordingly.
 
 ```C#
 // WaveEntity.cs
