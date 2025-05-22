@@ -108,4 +108,4 @@ This is called [12-tone equal temperament](https://en.wikipedia.org/wiki/12_equa
 
 This gives a logarithmic relationship between perceived pitch and frequency, which we will have to deal with if we want to modify a pitch in terms of absolute frequency with things like low-frequency oscillators. For example, if we take a pitch A4 = 440 Hz and apply a 220 Hz low-frequency oscillator on its frequency, we will get the potentially undesired effect of the pitch wobble sounding like it only goes about half an octave above the reference pitch, but an entire octave below the reference pitch! We would need to normalize the LFO to oscillate logarithmically if we want the same interval of pitch wobble above and below the reference pitch.
 
-#### <<< [\[03\] wave-generation](./03_wave-generation.md) | [\[05\] envelopes](./05_envelopes.md) >>>
+#### <<< [\[03\] wave generation](./03_wave-generation.md) | [\[05\] envelopes](./05_envelopes.md) >>>
