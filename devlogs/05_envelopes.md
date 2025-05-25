@@ -145,6 +145,8 @@ https://github.com/user-attachments/assets/14c433af-b98f-4801-a4e8-707d9f9b7315
 
 I really like this aesthetic of tactile knobs and LED indicator lights for each stage.
 
+I would like to include more nuanced envelope curves: right now, the curve interpolations are linear, which is not the smoothest-sounding at times, especially when the attack, decay, or release is very short. Being able to configure which type of curve to use for each envelope stage, as well as showing the actual visual for the envelope curve itself, is an additional set of features I'd like to add later on.
+
 Once I got envelope modules working, I started getting a bit more excited about this project. It felt like there really was potential to take the project really far and I started getting a lot more motivation to work on it! I immediately started thinking of a way to address that I thought was the next obvious limitation: currently, we only have one voice. If I hold two keys at the same time on my MIDI keyboard, we only hear the pitch of the "last" key that gets pressed. To support multiple voices, i.e. *polyphony*, we'll need to come up with a creative way to split a "polyphonic" MIDI signal into several monophonic MIDI signals. We'll tackle that in the next entry!
 
 #### <<< [\[04\] midi keyboards](./04_midi-keyboards.md) | [\[06\] polyphony](./06_polyphony.md) >>>
