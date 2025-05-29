@@ -11,8 +11,6 @@ A devlog for a modular music system made with Godot.
 - [**\[04\]**](devlogs/04_midi-keyboards.md) **midi keyboards and polyphony** - using real-world midi controllers
 - [**\[05\]**](devlogs/05_envelopes.md) **envelopes** - shaping sound and giving it a voice with attack, decay, sustain, and release
 - [**\[06\]**](devlogs/06_polyphony.md) **polyphony** - how can we play more than one voice at a time?
-
-### in progress
 - [**\[07\]**](devlogs/07_biquad-filters.md) **biquad filters** - changing the character of a sound by playing with its frequency responses
 
 ### coming soon
