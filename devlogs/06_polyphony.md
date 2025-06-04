@@ -94,4 +94,4 @@ Also, note that when I tried playing a third held note, it did not sound, becaus
 
 I definitely want to create a more integrated module in the future that essentilly crunches everything shown in the demo above into a single unit. I would probably call these heftier modules with built-in wave generation and envelope modulation *instruments*.
 
-#### <<< [\[05\] envelopes](./05_envelopes.md) | [\[07\] biquad filters](./07_biquad-filters.md) >>>
+#### <<< [\[05\] envelopes](./05_envelopes.md) | [\[07\] filters](./07_filters.md) >>>

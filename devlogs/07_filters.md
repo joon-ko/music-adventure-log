@@ -1,4 +1,4 @@
-# \[07\] biquad filters
+# \[07\] filters
 
 Up to now, we've been able to work with an audio signal's time-series data (1024 frames per block) and do straightforward pointwise manipulations on them. For example, the envelope module multiplies each audio frame pointwise by an amplitude factor that varies along a short section of an envelope curve. Another simple example is the *mixer*: it takes each audio input and sums all of them up pointwise, then normalizes this sum by dividing by the number of inputs.
 
