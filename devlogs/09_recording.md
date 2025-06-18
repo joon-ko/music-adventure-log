@@ -16,7 +16,7 @@ I want the project to have all of these, but in this entry, I'll focus on the fi
 
 ## recorder module
 
-![](../images/recorder-scene.png)
+<img src="../images/recorder-scene.png" width="400" />
 
 The visuals of the recorder module, as with everything, is still but a prototype. However, I like this design more than I thought :\) There's just something satisfying about the big red buttons and seeing `00.00 / 00.00`.
 
@@ -147,7 +147,7 @@ It turns out that the act of recording is super easy in audio block land! Just p
 
 When everything is hooked up and implemented, we now have our first recorded sounds!
 
-![]()
+https://github.com/user-attachments/assets/6480df94-126d-4fed-ada6-ec1d5ef71d85
 
 ## microphone module
 
@@ -229,7 +229,7 @@ Step 1 is fairly straightforward, but I got hung up on step 2 and didn't figure 
 
 Now that we have a microphone to record external input, which flows through the system and gets played back on at external output, we can create a feedback loop where past outputs contribute to the current input.
 
-![]()
+https://github.com/user-attachments/assets/071066c8-9bfc-4b74-8b47-7e2ae28c2dcb
 
 (The microphone module's visuals haven't been fleshed out yet.)
 
@@ -237,7 +237,7 @@ A secondary inspiration for this project is the class I took alongside Interacti
 
 Unfortunately, I ended up dropping the class once the pandemic hit and I focused on my workloads in other classes, which I regret knowing my current path now. But being able to play around with feedback like this in my project feels full circle and made me think back to that first assignment for Electronic Music Composition, huddled in the music building's recording booth by myself at 1am on a brisk February night.
 
-![]()
+https://github.com/user-attachments/assets/30da278a-b11f-4bd2-9b81-a6a3de2c2d6b
 
 ## global recording
 
