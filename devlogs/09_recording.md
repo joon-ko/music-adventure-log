@@ -4,15 +4,15 @@ The ability to record audio and play it back within the system is a core piece o
 
 There are three main types of modules that come to mind when I think of recording:
 
-- **Recorders** focus on the function collecting and saving audio streamed to an input buffer. This recorded data can be turned into an audio sample for further playback or manipulation.
+- **Recorders** collect and save audio streamed to an input buffer. This recorded data can be turned into an audio sample for further playback or manipulation.
 
 - **Microphones** capture audio input from an physical external source, such as a microphone or a port on an audio interface like a [FocusRite Scarlett device](https://us.focusrite.com/products/scarlett-solo). This captured audio gets streamed to an audio output. Microphones do not necessarily perform the function of recording!
 
 - **Samplers** work with, well, audio samples: they can play them back, crop them, chop them up, and maybe even tweak their playback speed or other acoustic characteristics. Samplers can therefore create new samples by combining and/or modifying other samples.
 
-- **Loopers** are a type of recorder, but they  specialize in "over-dubbing" or layers tracks on top of each other in a looping succession. This allows for composing songs with multiple parts one part at a time.
+- **Loopers** are a type of recorder, but they  specialize in "over-dubbing" or layering tracks on top of each other in looping succession. This allows for composing songs with multiple parts one part at a time.
 
-In this entry, I'll focus on the first two types: recording from an input buffer, and streaming audio from an external audio input such as a microphone. The basic recorder module I have in mind will support recording, as well as basic playback functionality: starting, stopping, and looping (without the overdub functionality that dedicated looper modules provide). I'll also go over a "global recording" feature that will allow us to export music from the system for the first time!
+I want the project to have all of these, but in this entry, I'll focus on the first two types: recording from an input buffer, and streaming audio from an external audio input such as a microphone. The basic recorder module I have in mind will support recording, as well as basic playback functionality: starting, stopping, and looping (without the overdub functionality that dedicated looper modules provide). I'll also go over a "global recording" feature that will allow us to export music from the system for the first time!
 
 ## recorder module
 
@@ -22,7 +22,7 @@ The visuals of the recorder module, as with everything, is still but a prototype
 
 To toggle playback looping on and off (as shown by the green loop indicator), hold the play button for a sufficiently long time. To clear the current recording, hold down the stop button. The audio being recorded is shown in the bottom panel. During playback, there is a play indicator that shows the current position. The timestamps above the bottom panel show the current time and the total recording duration, respectively.
 
-There's definitely some things I want to tweak with the visuals eventually, but I really enjoy the act of _designing_ these modules and making them aesthetic while still being compact yet affording functionality that is hopefully intuitive to use. I would say that there is just as much time spent sketching out a module's apperance and mocking it up in Aseprite as there is time spent in coding and framing it in Godot.
+There's definitely some things I want to tweak with the visuals eventually, but I really enjoy the act of _designing_ these modules and making them compact while still affording functionality that is hopefully intuitive to use. I would say that there is just as much time spent sketching out a module's apperance and mocking it up in Aseprite as there is time spent in coding and framing it in Godot.
 
 The current implementation of the recorder's audio node is quite naïve in that the recorded audio data is just stored in a potentially huge list of audio frames that is capped.
 
@@ -71,7 +71,7 @@ public float GetPlayMarkerTime()
 }
 ```
 
-The play index is the current audio frame. Since there are a `MIX_RATE` number of samples per second, we can get the current timestamp (the first number in the `00.00 / 00.00` display) by dividing the current audio frame by this mix rate.
+`playIndex` is the current audio frame. Since there are a `MIX_RATE` number of samples per second, we can get the current timestamp (the first number in the `00.00 / 00.00` display) by dividing the current audio frame by this mix rate.
 
 The two main methods are `Process()` and `Record()`. Let's go over `Process()` first.
 
@@ -151,15 +151,63 @@ When everything is hooked up and implemented, we now have our first recorded sou
 
 ## microphone module
 
-The strategy for capturing external audio input involves instantiating an [AudioStreamMicrophone](https://docs.godotengine.org/en/stable/classes/class_audiostreammicrophone.html) to an AudioStreamPlayer attached to the microphone entity. The AudioStreamPlayer, true to its name, plays an audio stream, but the catch is that it plays to a specified [audio bus](https://docs.godotengine.org/en/stable/tutorials/audio/audio_buses.html). Until now, we've largely been able to skirt around Godot's audio bus system because we've essentially been building our own audio routing system and haven't needed it (except the Master bus, which speaker modules push to). However, we now need to adhere to the spec of the AudioStreamPlayer and find a way to capture audio from an audio bus and integrate it with the system.
+<img src="../images/microphone-asp.png" width="300" />
 
-Before we talk about that, though, let's briefly discuss the AudioStreamMicrophone. Instead of the typical relationship between an AudioStream and its AudioStreamPlayer where the AudioStream is a preexisting, saved recording that is played back, the AudioStreamMicrophone plays back audio from the _current input device_ in real time. There can only be one current input device at a time (quite unfortunately) and is set by [AudioServer.InputDevice](https://docs.godotengine.org/en/stable/classes/class_audioserver.html#class-audioserver-property-input-device). The list of available input devices can be retrieved with [AudioServer.GetInputDeviceList()](https://docs.godotengine.org/en/stable/classes/class_audioserver.html#class-audioserver-method-get-input-device-list). This will allow the microphone module to select which input to use. Finally, to enable audio input, `ProjectSettings.audio/driver/enable_input` must be true.
+The strategy for capturing external audio input involves instantiating an [AudioStreamMicrophone](https://docs.godotengine.org/en/stable/classes/class_audiostreammicrophone.html) to an AudioStreamPlayer attached to the microphone entity. The AudioStreamPlayer, true to its name, plays an audio stream, but the catch is that it plays to a specified [audio bus](https://docs.godotengine.org/en/stable/tutorials/audio/audio_buses.html). Until now, we've largely been able to skirt around Godot's audio bus system because we've essentially been building our own audio routing system and haven't needed it (except the Master bus, which speaker modules push to). However, we now need to adhere to the spec of the AudioStreamPlayer and find a way to capture audio from a bus and integrate it with the system.
+
+Before we talk about that, though, let's briefly discuss the AudioStreamMicrophone. Instead of the typical relationship between an AudioStream and its AudioStreamPlayer where the AudioStream is a preexisting, saved recording that is played back, the AudioStreamMicrophone plays back audio from the _current input device_ in real time. There can only be one current input device at a time (quite unfortunately limiting the possibility of multi-input recording) and is set by [AudioServer.InputDevice](https://docs.godotengine.org/en/stable/classes/class_audioserver.html#class-audioserver-property-input-device). The list of available input devices can be retrieved with [AudioServer.GetInputDeviceList()](https://docs.godotengine.org/en/stable/classes/class_audioserver.html#class-audioserver-method-get-input-device-list). This will allow the microphone module to select which input to use. Finally, to enable audio input, `ProjectSettings.audio/driver/enable_input` must be true.
 
 Okay, back to audio buses: we can use [AudioEffectCapture](https://docs.godotengine.org/en/stable/classes/class_audioeffectcapture.html#class-audioeffectcapture) as a sort of inverse operation to the [AudioStreamGenerator](https://docs.godotengine.org/en/stable/classes/class_audiostreamgenerator.html). Whereas speaker modules use the latter to push audio data to a buffer, microphone modules use the former to read audio data _from_ a buffer. As such, AudioEffectCaptures also come with a `BufferSize` parameter that should be chosen carefully to balance latency and performance. There are methods like `GetBuffer(int frames)`, `GetFramesAvailable()`, and `CanGetBuffer(int frames)`, similar to AudioStreamGenerators, to pop audio frames pushed by the AudioStreamMicrophone.
 
-<img src="../images/audio-effect-capture.png" width="100" />
-
 To recap, the strategy is for the AudioStreamPlayer's AudioStreamMicrophone to push external audio input data to the above audio bus named Capture. This bus has one audio effect, an AudioEffectCapture, which collects this audio into a capture buffer. The microphone module then integrates the data from the capture buffer into the rest of the system by calling the microphone node's `Process()` method, which pulls a block-size's worth of audio data from the capture buffer.
+
+```C#
+// Snippet of MicrophoneNode.cs
+public override void Process(int outputIndex)
+{
+    // ...
+    var captureEffect = _GetCaptureEffect();
+
+    var framesAvailable = captureEffect.GetFramesAvailable();
+    var micBufferSpace = micBufferMaxLength - microphoneBuffer.Count;
+    var pickableFrames = micBufferSpace >= framesAvailable ? framesAvailable : micBufferSpace;
+
+    // Always try to empty the capture effect buffer into the secondary buffer whenever possible.
+    var samples = captureEffect.GetBuffer(pickableFrames);
+    for (int i=0; i < samples.Length; i++)
+    {
+        if (microphoneBuffer.Count >= micBufferMaxLength)
+        {
+            GD.Print("Hit max length on mic buffer");
+            break;
+        }
+        // Just pick the left channel since input is stereo
+        microphoneBuffer.Add(samples[i].X);
+    }
+
+    // If the secondary buffer has enough audio to push one block's worth of data, then do so.
+    if (microphoneBuffer.Count >= AudioConstants.BLOCK_SIZE)
+    {
+        var micSlice = microphoneBuffer.GetRange(0, AudioConstants.BLOCK_SIZE);
+        microphoneBuffer.RemoveRange(0, AudioConstants.BLOCK_SIZE);
+
+        for (int i=0; i < AudioConstants.BLOCK_SIZE; i++)
+        {
+            targetBuffer[i] = micSlice[i];
+        }
+    }
+    // Otherwise, send silence and keep accumulating audio.
+    else
+    {
+        GD.Print("Couldn't get microphone buffer size large enough. current size is " + microphoneBuffer.Count);
+        Array.Clear(targetBuffer);
+    }
+}
+```
+
+We probably don't need to push audio to an intermediate buffer and can just wait until the capture buffer itself is larger than one block size. But this works for now, so I haven't optimized it, hehe.
+
+<img src="../images/audio-effect-capture.png" width="100" />
 
 All audio buses must eventually route to Master, but we can actually mute this audio bus so that no audio gets leaked to Master, but we can still capture the audio on this bus. That's why the red "M" symbol is selected.
 
@@ -176,15 +224,18 @@ I spent a long time trying to implement my own resampling algorithms. The [gener
 
 Step 1 is fairly straightforward, but I got hung up on step 2 and didn't figure out a way to get this to work after a few days of trying. :\( Around this point, I realized that I should probably just try to increase the project's mix rate to 48k. Fortunately, this mix rate still falls well within our specifications of wanting to process 1,024 frames up to 60 times per second. Thankfully, this magically resolved the popping issue and the microphone was now working relatively smoothly! Eventually, I want a rematch and conquer the challenge of resampling, but for now I'm happy to move on.
 
-![]()
 
 ## feedback
 
 Now that we have a microphone to record external input, which flows through the system and gets played back on at external output, we can create a feedback loop where past outputs contribute to the current input.
 
+![]()
+
+(The microphone module's visuals haven't been fleshed out yet.)
+
 A secondary inspiration for this project is the class I took alongside Interactive Music Systems called Electronic Music Composition, taught by an eccentric professor named peter whincop. It was a refreshing counterpoint to dreary western Music Theory 101 where instead of diatonic harmony, the course's first principles were rooted in noise, sounds, recording, and feedback. Our first assignment was to sit in the class's recording booth with a microphone and a glass, and using nothing but the glass, silence, a microphone, and an equalizer, use feedback to create an audio composition.
 
-Unfortunately, I ended up dropping the class once the pandemic hit and I focused on my workloads in other classes, which I regret knowing my current life path now. But being able to play around with feedback like this in my project feels full circle and made me think back to that first assignment for Electronic Music Composition, huddled in the music building's recording booth by myself at 1am on a brisk February night.
+Unfortunately, I ended up dropping the class once the pandemic hit and I focused on my workloads in other classes, which I regret knowing my current path now. But being able to play around with feedback like this in my project feels full circle and made me think back to that first assignment for Electronic Music Composition, huddled in the music building's recording booth by myself at 1am on a brisk February night.
 
 ![]()
 
