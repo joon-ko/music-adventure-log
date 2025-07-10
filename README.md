@@ -1,7 +1,7 @@
 # modular music adventures
 A devlog for a modular music system made with Godot.
 
-![](images/all-modules.png)
+![](images/07-10-2025.png)
 
 ## entries
 ### completed
